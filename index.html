@@ -1,0 +1,1029 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>U-Substitution Practice Game</title>
+  <style>
+    /* Embedded CSS Styles */
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f0f0f0;
+    }
+
+    .container {
+      width: 90%;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .menu {
+      margin-top: 50px;
+    }
+
+    .menu h1 {
+      font-size: 36px;
+      margin-bottom: 30px;
+    }
+
+    .toggle-group {
+      margin-bottom: 20px;
+    }
+
+    .toggle-group label {
+      font-size: 20px;
+      margin-right: 10px;
+    }
+
+    .toggle-group select {
+      font-size: 18px;
+      padding: 5px 10px;
+    }
+
+    .menu-button {
+      padding: 15px 30px;
+      margin: 10px;
+      font-size: 22px;
+      background-color: #2196F3;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .menu-button:hover {
+      background-color: #1976D2;
+    }
+
+    .question-section {
+      margin-top: 50px;
+    }
+
+    .question-section h1 {
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+
+    .options-list {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .options-list button {
+      width: 80%;
+      padding: 10px;
+      margin: 5px 0;
+      background-color: #FFFFE0; /* Light yellow */
+      color: black;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 18px;
+      position: relative;
+    }
+
+    .options-list button:hover {
+      background-color: #FFFACD; /* Lighter yellow on hover */
+    }
+
+    .options-list button.correct {
+      background-color: #4CAF50 !important; /* Green */
+      color: white;
+    }
+
+    .options-list button.incorrect {
+      background-color: #f44336 !important; /* Red */
+      color: white;
+    }
+
+    .info-text {
+      margin-left: 10px;
+      font-size: 16px;
+      color: black;
+    }
+
+    .next-btn {
+      padding: 10px 20px;
+      margin-top: 20px;
+      background-color: #2196F3;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 18px;
+    }
+
+    .next-btn:hover {
+      background-color: #1976D2;
+    }
+
+    .score-section {
+      margin-top: 30px;
+      font-size: 20px;
+    }
+
+    .end-game-btn {
+      margin-top: 20px;
+      padding: 10px 20px;
+      background-color: #f44336;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 18px;
+    }
+
+    .end-game-btn:hover {
+      background-color: #d32f2f;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .instructions {
+      margin-top: 50px;
+      font-size: 18px;
+      text-align: left;
+      line-height: 1.5;
+    }
+
+    .instructions h2 {
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+
+    .back-btn {
+      padding: 10px 20px;
+      margin-top: 20px;
+      background-color: #555;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 18px;
+    }
+
+    .back-btn:hover {
+      background-color: #333;
+    }
+  </style>
+  <!-- MathJax for rendering LaTeX -->
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+  </script>
+</head>
+<body>
+  <div class="container">
+    <!-- Main Menu -->
+    <div id="mainMenu" class="menu">
+      <h1>U-Substitution Practice Game</h1>
+      <div class="toggle-group">
+        <label for="orderSelect">Problem Order:</label>
+        <select id="orderSelect">
+          <option value="random">Random</option>
+          <option value="consecutive">Consecutive</option>
+        </select>
+      </div>
+      <div class="toggle-group">
+        <label for="lengthSelect">Game Length:</label>
+        <select id="lengthSelect">
+          <option value="10">10 Rounds</option>
+          <option value="30">30 Rounds</option>
+          <option value="50">50 Rounds</option>
+          <option value="unlimited">Unlimited</option>
+        </select>
+      </div>
+      <button id="howToBtn" class="menu-button">How to Play</button>
+      <button id="playNowBtn" class="menu-button">Play Now</button>
+    </div>
+
+    <!-- Instructions Screen -->
+    <div id="instructionsScreen" class="instructions hidden">
+      <h2>How to Play</h2>
+      <p>This game will help you practice u-substitution for integrals.</p>
+      <p>For each integral, you will be asked two questions:</p>
+      <ol>
+        <li>Select the appropriate substitution \( u \) and compute \( du \).</li>
+        <li>Find the integral in terms of \( x \), using your substitution.</li>
+      </ol>
+      <p>Answer correctly to earn points. Incorrect answers will deduct points. Try to get the highest score possible!</p>
+      <button id="backBtn" class="back-btn">Back to Menu</button>
+    </div>
+
+    <!-- Game Content -->
+    <div id="gameContent" class="hidden">
+      <div class="question-section">
+        <h1 id="questionText">Evaluate the integral:</h1>
+        <div id="integralDisplay"></div>
+        <div id="questionPrompt"></div>
+        <div id="options" class="options-list"></div>
+        <button id="nextQuestionBtn" class="next-btn" style="display: none;">Next Question</button>
+      </div>
+      <div class="score-section">
+        <p id="scoreDisplay">Score: 0</p>
+        <p id="roundDisplay"></p>
+      </div>
+      <button id="endGameBtn" class="end-game-btn" style="display: none;">End Game</button>
+    </div>
+
+    <!-- End Screen -->
+    <div id="endScreen" class="hidden">
+      <h1>Game Over</h1>
+      <p id="finalScore"></p>
+      <button id="restartBtn" class="next-btn">Restart Game</button>
+    </div>
+  </div>
+
+  <!-- Embedded JavaScript Code -->
+  <script>
+const questions = [
+  // Question 1
+  {
+    integral: '\\int \\left( 2x \\right) \\left( x^2 + 1 \\right)^3 \\, dx',
+    uOptions: [
+      {
+        option: 'Let ',
+        equation: 'u = x^2 + 1',
+        thenText: ', then ',
+        duEquation: 'du = 2x \\, dx',
+        correct: true
+      },
+      {
+        option: 'Let ',
+        equation: 'u = x^2',
+        thenText: ', then ',
+        duEquation: 'du = 2x \\, dx',
+        correct: false
+      },
+      {
+        option: 'Let ',
+        equation: 'u = \\left( x^2 + 1 \\right)^3',
+        thenText: ', then ',
+        duEquation: 'du = 3 \\left( x^2 + 1 \\right)^2 \\cdot 2x \\, dx',
+        correct: false
+      },
+      {
+        option: 'Let ',
+        equation: 'u = 2x',
+        thenText: ', then ',
+        duEquation: 'du = 2 \\, dx',
+        correct: false
+      }
+    ],
+    integralOptions: [
+      {
+        option: '',
+        equation: '\\dfrac{1}{4} \\left( x^2 + 1 \\right)^4 + C',
+        correct: true
+      },
+      {
+        option: '',
+        equation: '\\left( x^2 + 1 \\right)^4 + C',
+        correct: false
+      },
+      {
+        option: '',
+        equation: '\\dfrac{1}{2} \\left( x^2 + 1 \\right)^4 + C',
+        correct: false
+      },
+      {
+        option: '',
+        equation: '\\dfrac{1}{4} \\left( x^2 + 1 \\right)^3 + C',
+        correct: false
+      }
+    ]
+  },
+  // Question 2
+  {
+    integral: '\\int x e^{x^2} \\, dx',
+    uOptions: [
+      {
+        option: 'Let ',
+        equation: 'u = x^2',
+        thenText: ', then ',
+        duEquation: 'du = 2x \\, dx',
+        correct: true
+      },
+      {
+        option: 'Let ',
+        equation: 'u = e^{x^2}',
+        thenText: ', then ',
+        duEquation: 'du = e^{x^2} \\cdot 2x \\, dx',
+        correct: false
+      },
+      {
+        option: 'Let ',
+        equation: 'u = x',
+        thenText: ', then ',
+        duEquation: 'du = dx',
+        correct: false
+      },
+      {
+        option: 'Let ',
+        equation: 'u = x e^{x^2}',
+        thenText: ', then ',
+        duEquation: 'du = e^{x^2} + 2x^2 e^{x^2} \\, dx',
+        correct: false
+      }
+    ],
+    integralOptions: [
+      {
+        option: '',
+        equation: '\\dfrac{1}{2} e^{x^2} + C',
+        correct: true
+      },
+      {
+        option: '',
+        equation: 'e^{x^2} + C',
+        correct: false
+      },
+      {
+        option: '',
+        equation: '\\dfrac{1}{2} x e^{x^2} + C',
+        correct: false
+      },
+      {
+        option: '',
+        equation: '\\dfrac{1}{2} e^{2x} + C',
+        correct: false
+      }
+    ]
+  },
+  // Question 3
+  {
+    integral: '\\int \\cos\\left( 3x \\right) \\, dx',
+    uOptions: [
+      {
+        option: 'Let ',
+        equation: 'u = 3x',
+        thenText: ', then ',
+        duEquation: 'du = 3 \\, dx',
+        correct: true
+      },
+      {
+        option: 'Let ',
+        equation: 'u = \\cos\\left( 3x \\right)',
+        thenText: ', then ',
+        duEquation: 'du = -3 \\sin\\left( 3x \\right) \\, dx',
+        correct: false
+      },
+      {
+        option: 'Let ',
+        equation: 'u = x',
+        thenText: ', then ',
+        duEquation: 'du = dx',
+        correct: false
+      },
+      {
+        option: 'Let ',
+        equation: 'u = \\sin\\left( 3x \\right)',
+        thenText: ', then ',
+        duEquation: 'du = 3 \\cos\\left( 3x \\right) \\, dx',
+        correct: false
+      }
+    ],
+    integralOptions: [
+      {
+        option: '',
+        equation: '\\dfrac{1}{3} \\sin\\left( 3x \\right) + C',
+        correct: true
+      },
+      {
+        option: '',
+        equation: '\\sin\\left( 3x \\right) + C',
+        correct: false
+      },
+      {
+        option: '',
+        equation: '\\dfrac{1}{3} \\cos\\left( 3x \\right) + C',
+        correct: false
+      },
+      {
+        option: '',
+        equation: '-\\dfrac{1}{3} \\sin\\left( 3x \\right) + C',
+        correct: false
+      }
+    ]
+  },
+  // Question 4
+  {
+    integral: '\\int \\dfrac{1}{x \\ln x} \\, dx',
+    uOptions: [
+      {
+        option: 'Let ',
+        equation: 'u = \\ln x',
+        thenText: ', then ',
+        duEquation: 'du = \\dfrac{1}{x} \\, dx',
+        correct: true
+      },
+      {
+        option: 'Let ',
+        equation: 'u = x',
+        thenText: ', then ',
+        duEquation: 'du = dx',
+        correct: false
+      },
+      {
+        option: 'Let ',
+        equation: 'u = x \\ln x',
+        thenText: ', then ',
+        duEquation: 'du = \\ln x + 1 \\, dx',
+        correct: false
+      },
+      {
+        option: 'Let ',
+        equation: 'u = \\dfrac{1}{x \\ln x}',
+        thenText: ', then ',
+        duEquation: 'du = -\\dfrac{1 + \\ln x}{x^2 \\left( \\ln x \\right)^2} \\, dx',
+        correct: false
+      }
+    ],
+    integralOptions: [
+      {
+        option: '',
+        equation: '\\ln \\left| \\ln x \\right| + C',
+        correct: true
+      },
+      {
+        option: '',
+        equation: '\\dfrac{1}{\\ln x} + C',
+        correct: false
+      },
+      {
+        option: '',
+        equation: '\\ln \\left| x \\ln x \\right| + C',
+        correct: false
+      },
+      {
+        option: '',
+        equation: '\\dfrac{\\ln x}{x} + C',
+        correct: false
+      }
+    ]
+  },
+  // Question 5
+  {
+    integral: '\\int \\dfrac{2x}{x^2 + 4} \\, dx',
+    uOptions: [
+      {
+        option: 'Let ',
+        equation: 'u = x^2 + 4',
+        thenText: ', then ',
+        duEquation: 'du = 2x \\, dx',
+        correct: true
+      },
+      {
+        option: 'Let ',
+        equation: 'u = x^2',
+        thenText: ', then ',
+        duEquation: 'du = 2x \\, dx',
+        correct: false
+      },
+      {
+        option: 'Let ',
+        equation: 'u = \\left( x^2 + 4 \\right)^2',
+        thenText: ', then ',
+        duEquation: 'du = 2 \\left( x^2 + 4 \\right) \\cdot 2x \\, dx',
+        correct: false
+      },
+      {
+        option: 'Let ',
+        equation: 'u = 2x',
+        thenText: ', then ',
+        duEquation: 'du = 2 \\, dx',
+        correct: false
+      }
+    ],
+    integralOptions: [
+      {
+        option: '',
+        equation: '\\ln \\left| x^2 + 4 \\right| + C',
+        correct: true
+      },
+      {
+        option: '',
+        equation: '\\dfrac{1}{x^2 + 4} + C',
+        correct: false
+      },
+      {
+        option: '',
+        equation: '\\dfrac{1}{2} \\ln \\left| x^2 + 4 \\right| + C',
+        correct: false
+      },
+      {
+        option: '',
+        equation: '\\arctan \\left( \\dfrac{x}{2} \\right) + C',
+        correct: false
+      }
+    ]
+  },
+  // Question 6
+  {
+    integral: '\\int \\sin\\left( 5x \\right) \\, dx',
+    uOptions: [
+      {
+        option: 'Let ',
+        equation: 'u = 5x',
+        thenText: ', then ',
+        duEquation: 'du = 5 \\, dx',
+        correct: true
+      },
+      {
+        option: 'Let ',
+        equation: 'u = \\sin\\left( 5x \\right)',
+        thenText: ', then ',
+        duEquation: 'du = 5 \\cos\\left( 5x \\right) \\, dx',
+        correct: false
+      },
+      {
+        option: 'Let ',
+        equation: 'u = x',
+        thenText: ', then ',
+        duEquation: 'du = dx',
+        correct: false
+      },
+      {
+        option: 'Let ',
+        equation: 'u = \\cos\\left( 5x \\right)',
+        thenText: ', then ',
+        duEquation: 'du = -5 \\sin\\left( 5x \\right) \\, dx',
+        correct: false
+      }
+    ],
+    integralOptions: [
+      {
+        option: '',
+        equation: '-\\dfrac{1}{5} \\cos\\left( 5x \\right) + C',
+        correct: true
+      },
+      {
+        option: '',
+        equation: '\\dfrac{1}{5} \\cos\\left( 5x \\right) + C',
+        correct: false
+      },
+      {
+        option: '',
+        equation: '-\\cos\\left( 5x \\right) + C',
+        correct: false
+      },
+      {
+        option: '',
+        equation: '\\dfrac{1}{5} \\sin\\left( 5x \\right) + C',
+        correct: false
+      }
+    ]
+  },
+  // Question 7
+  {
+    integral: '\\int \\dfrac{1}{\\sqrt{1 - x^2}} \\, dx',
+    uOptions: [
+      {
+        option: 'Let ',
+        equation: 'u = \\arcsin x',
+        thenText: ', then ',
+        duEquation: 'du = \\dfrac{1}{\\sqrt{1 - x^2}} \\, dx',
+        correct: true
+      },
+      {
+        option: 'Let ',
+        equation: 'u = 1 - x^2',
+        thenText: ', then ',
+        duEquation: 'du = -2x \\, dx',
+        correct: false
+      },
+      {
+        option: 'Let ',
+        equation: 'u = \\sqrt{1 - x^2}',
+        thenText: ', then ',
+        duEquation: 'du = \\dfrac{-x}{\\sqrt{1 - x^2}} \\, dx',
+        correct: false
+      },
+      {
+        option: 'Let ',
+        equation: 'u = x',
+        thenText: ', then ',
+        duEquation: 'du = dx',
+        correct: false
+      }
+    ],
+    integralOptions: [
+      {
+        option: '',
+        equation: '\\arcsin x + C',
+        correct: true
+      },
+      {
+        option: '',
+        equation: '\\arccos x + C',
+        correct: false
+      },
+      {
+        option: '',
+        equation: '\\ln \\left| \\sqrt{1 - x^2} \\right| + C',
+        correct: false
+      },
+      {
+        option: '',
+        equation: '\\dfrac{1}{\\sqrt{1 - x^2}} + C',
+        correct: false
+      }
+    ]
+  },
+  // Question 8
+  {
+    integral: '\\int e^{3x} \\, dx',
+    uOptions: [
+      {
+        option: 'Let ',
+        equation: 'u = 3x',
+        thenText: ', then ',
+        duEquation: 'du = 3 \\, dx',
+        correct: true
+      },
+      {
+        option: 'Let ',
+        equation: 'u = e^{3x}',
+        thenText: ', then ',
+        duEquation: 'du = 3 e^{3x} \\, dx',
+        correct: false
+      },
+      {
+        option: 'Let ',
+        equation: 'u = x',
+        thenText: ', then ',
+        duEquation: 'du = dx',
+        correct: false
+      },
+      {
+        option: 'Let ',
+        equation: 'u = 3',
+        thenText: ', then ',
+        duEquation: 'du = 0',
+        correct: false
+      }
+    ],
+    integralOptions: [
+      {
+        option: '',
+        equation: '\\dfrac{1}{3} e^{3x} + C',
+        correct: true
+      },
+      {
+        option: '',
+        equation: 'e^{3x} + C',
+        correct: false
+      },
+      {
+        option: '',
+        equation: '3 e^{3x} + C',
+        correct: false
+      },
+      {
+        option: '',
+        equation: '\\dfrac{1}{3} e^{x} + C',
+        correct: false
+      }
+    ]
+  },
+  // Question 9
+  {
+    integral: '\\int \\dfrac{x}{\\sqrt{x^2 + 1}} \\, dx',
+    uOptions: [
+      {
+        option: 'Let ',
+        equation: 'u = x^2 + 1',
+        thenText: ', then ',
+        duEquation: 'du = 2x \\, dx',
+        correct: true
+      },
+      {
+        option: 'Let ',
+        equation: 'u = \\sqrt{x^2 + 1}',
+        thenText: ', then ',
+        duEquation: 'du = \\dfrac{x}{\\sqrt{x^2 + 1}} \\, dx',
+        correct: false
+      },
+      {
+        option: 'Let ',
+        equation: 'u = x',
+        thenText: ', then ',
+        duEquation: 'du = dx',
+        correct: false
+      },
+      {
+        option: 'Let ',
+        equation: 'u = x^2',
+        thenText: ', then ',
+        duEquation: 'du = 2x \\, dx',
+        correct: false
+      }
+    ],
+    integralOptions: [
+      {
+        option: '',
+        equation: '\\sqrt{x^2 + 1} + C',
+        correct: true
+      },
+      {
+        option: '',
+        equation: '\\ln \\left| x^2 + 1 \\right| + C',
+        correct: false
+      },
+      {
+        option: '',
+        equation: '\\dfrac{1}{2} \\left( x^2 + 1 \\right)^{3/2} + C',
+        correct: false
+      },
+      {
+        option: '',
+        equation: '\\dfrac{x}{\\sqrt{x^2 + 1}} + C',
+        correct: false
+      }
+    ]
+  },
+  // Question 10
+  {
+    integral: '\\int \\dfrac{\\tan x}{\\sec x} \\, dx',
+    uOptions: [
+      {
+        option: 'Let ',
+        equation: 'u = \\sec x',
+        thenText: ', then ',
+        duEquation: 'du = \\sec x \\tan x \\, dx',
+        correct: true
+      },
+      {
+        option: 'Let ',
+        equation: 'u = \\tan x',
+        thenText: ', then ',
+        duEquation: 'du = \\sec^2 x \\, dx',
+        correct: false
+      },
+      {
+        option: 'Let ',
+        equation: 'u = \\dfrac{\\tan x}{\\sec x}',
+        thenText: ', then ',
+        duEquation: 'du = \\dfrac{\\sec^2 x - \\tan^2 x}{\\sec^2 x} \\, dx',
+        correct: false
+      },
+      {
+        option: 'Let ',
+        equation: 'u = x',
+        thenText: ', then ',
+        duEquation: 'du = dx',
+        correct: false
+      }
+    ],
+    integralOptions: [
+      {
+        option: '',
+        equation: '\\ln \\left| \\sec x \\right| + C',
+        correct: true
+      },
+      {
+        option: '',
+        equation: '\\ln \\left| \\tan x \\right| + C',
+        correct: false
+      },
+      {
+        option: '',
+        equation: '\\dfrac{1}{\\sec x} + C',
+        correct: false
+      },
+      {
+        option: '',
+        equation: '\\tan x + C',
+        correct: false
+      }
+    ]
+  }
+];
+
+
+    // Game Variables
+    let currentQuestionIndex = 0;
+    let currentPart = 1; // 1 for u-substitution, 2 for integral
+    let score = 0;
+    let roundsPlayed = 0;
+    let gameLength = '10'; // Default game length
+    let problemOrder = 'random'; // Default order
+    let selectedQuestions = [];
+    let advanceAllowed = false; // New variable to control advancement
+    let currentCorrectOption = null; // To store the correct option object
+
+    // DOM Elements
+    const mainMenu = document.getElementById('mainMenu');
+    const howToBtn = document.getElementById('howToBtn');
+    const playNowBtn = document.getElementById('playNowBtn');
+    const instructionsScreen = document.getElementById('instructionsScreen');
+    const backBtn = document.getElementById('backBtn');
+    const gameContent = document.getElementById('gameContent');
+    const questionText = document.getElementById('questionText');
+    const integralDisplay = document.getElementById('integralDisplay');
+    const questionPrompt = document.getElementById('questionPrompt');
+    const optionsContainer = document.getElementById('options');
+    const nextQuestionBtn = document.getElementById('nextQuestionBtn');
+    const scoreDisplay = document.getElementById('scoreDisplay');
+    const roundDisplay = document.getElementById('roundDisplay');
+    const endGameBtn = document.getElementById('endGameBtn');
+    const endScreen = document.getElementById('endScreen');
+    const finalScore = document.getElementById('finalScore');
+    const restartBtn = document.getElementById('restartBtn');
+    const orderSelect = document.getElementById('orderSelect');
+    const lengthSelect = document.getElementById('lengthSelect');
+
+    // Event Listeners
+    howToBtn.addEventListener('click', showInstructions);
+    backBtn.addEventListener('click', showMainMenu);
+    playNowBtn.addEventListener('click', startGame);
+    nextQuestionBtn.addEventListener('click', setupQuestion);
+    endGameBtn.addEventListener('click', endGame);
+    restartBtn.addEventListener('click', restartGame);
+
+    function showInstructions() {
+      mainMenu.classList.add('hidden');
+      instructionsScreen.classList.remove('hidden');
+    }
+
+    function showMainMenu() {
+      instructionsScreen.classList.add('hidden');
+      mainMenu.classList.remove('hidden');
+    }
+
+    function startGame() {
+      // Get game settings
+      problemOrder = orderSelect.value;
+      gameLength = lengthSelect.value;
+
+      // Prepare questions based on problem order
+      if (problemOrder === 'random') {
+        selectedQuestions = [...questions].sort(() => Math.random() - 0.5);
+      } else {
+        selectedQuestions = [...questions];
+      }
+
+      // Adjust game length if not unlimited
+      if (gameLength !== 'unlimited') {
+        selectedQuestions = selectedQuestions.slice(0, parseInt(gameLength));
+      }
+
+      // Reset variables
+      currentQuestionIndex = 0;
+      currentPart = 1;
+      score = 0;
+      roundsPlayed = 0;
+      scoreDisplay.textContent = `Score: ${score}`;
+      roundDisplay.textContent = `Round: ${roundsPlayed + 1}/${gameLength === 'unlimited' ? selectedQuestions.length : gameLength}`;
+
+      // Show game content and hide menu
+      mainMenu.classList.add('hidden');
+      gameContent.classList.remove('hidden');
+
+      setupQuestion();
+    }
+
+    function setupQuestion() {
+      if (currentQuestionIndex >= selectedQuestions.length) {
+        endGame();
+        return;
+      }
+
+      currentPart = 1;
+      advanceAllowed = false; // Reset advanceAllowed
+      nextQuestionBtn.style.display = 'none';
+      endGameBtn.style.display = 'inline';
+      optionsContainer.innerHTML = '';
+
+      const currentQuestion = selectedQuestions[currentQuestionIndex];
+      questionText.textContent = 'Evaluate the integral:';
+      integralDisplay.innerHTML = `\\( \\displaystyle ${currentQuestion.integral} \\)`;
+      questionPrompt.textContent = 'Step 1: Choose the appropriate substitution and compute \\( du \\).';
+      generateOptions(currentQuestion.uOptions);
+
+      roundsPlayed++;
+      roundDisplay.textContent = `Round: ${roundsPlayed}/${gameLength === 'unlimited' ? selectedQuestions.length : gameLength}`;
+
+      MathJax.typesetPromise();
+    }
+
+    function generateOptions(options) {
+      optionsContainer.innerHTML = '';
+      advanceAllowed = false; // Reset advanceAllowed
+      currentCorrectOption = null; // Reset correct option
+      options.sort(() => Math.random() - 0.5);
+      options.forEach(optionObj => {
+        const button = document.createElement('button');
+
+        // Construct the option text with LaTeX only for equations
+        let optionHTML = '';
+        if (optionObj.option) {
+          optionHTML += optionObj.option;
+        }
+        if (optionObj.equation) {
+          optionHTML += `\\( ${optionObj.equation} \\)`;
+        }
+        if (optionObj.thenText) {
+          optionHTML += optionObj.thenText;
+        }
+        if (optionObj.duEquation) {
+          optionHTML += `\\( ${optionObj.duEquation} \\)`;
+        }
+
+        button.innerHTML = optionHTML;
+        button.optionObj = optionObj; // Attach optionObj to button
+        button.onclick = () => checkAnswer(optionObj, button);
+        optionsContainer.appendChild(button);
+
+        if (optionObj.correct) {
+          currentCorrectOption = optionObj;
+        }
+      });
+      MathJax.typesetPromise();
+    }
+
+    function checkAnswer(optionObj, button) {
+      if (advanceAllowed) {
+        // If allowed to advance, only proceed if correct answer button is clicked
+        if (optionObj.correct) {
+          if (currentPart === 1) {
+            currentPart = 2;
+            const currentQuestion = selectedQuestions[currentQuestionIndex];
+            // Provide hint using the correct u and du
+            let hintText = 'Step 2: Find the integral in terms of \\( x \\).<br>HINT: ';
+            hintText += 'Use the substitution ';
+            hintText += optionObj.option;
+            hintText += `\\( ${optionObj.equation} \\)`;
+            hintText += optionObj.thenText;
+            hintText += `\\( ${optionObj.duEquation} \\)`;
+            questionPrompt.innerHTML = hintText;
+            generateOptions(currentQuestion.integralOptions);
+            MathJax.typesetPromise();
+          } else {
+            currentQuestionIndex++;
+            nextQuestionBtn.style.display = 'inline';
+          }
+          advanceAllowed = false;
+        }
+        return;
+      }
+
+      // First time an answer is selected
+      if (optionObj.correct) {
+        // Correct answer selected
+        button.classList.add('correct');
+        score += 10;
+        scoreDisplay.textContent = `Score: ${score}`;
+
+        // Add the text "Click again to advance" next to the button
+        const infoSpan = document.createElement('span');
+        infoSpan.className = 'info-text';
+        infoSpan.textContent = ' Click again to advance';
+        button.appendChild(infoSpan);
+
+        advanceAllowed = true;
+      } else {
+        // Incorrect answer selected
+        button.classList.add('incorrect');
+        score = Math.max(0, score - 5);
+        scoreDisplay.textContent = `Score: ${score}`;
+
+        // Find and highlight the correct answer
+        const buttons = optionsContainer.querySelectorAll('button');
+        buttons.forEach(btn => {
+          if (btn.optionObj && btn.optionObj.correct) {
+            btn.classList.add('correct');
+
+            // Add the text "Click the correct answer to advance" next to the correct button
+            const infoSpan = document.createElement('span');
+            infoSpan.className = 'info-text';
+            infoSpan.textContent = ' Click the correct answer to advance';
+            btn.appendChild(infoSpan);
+          }
+        });
+
+        advanceAllowed = true;
+      }
+    }
+
+    function endGame() {
+      // Hide game content and show end screen
+      gameContent.classList.add('hidden');
+      endScreen.classList.remove('hidden');
+      finalScore.textContent = `Your final score is: ${score}`;
+    }
+
+    function restartGame() {
+      // Reset variables and return to main menu
+      currentQuestionIndex = 0;
+      currentPart = 1;
+      score = 0;
+      roundsPlayed = 0;
+      scoreDisplay.textContent = `Score: ${score}`;
+      endScreen.classList.add('hidden');
+      mainMenu.classList.remove('hidden');
+    }
+  </script>
+</body>
+</html>
