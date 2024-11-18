@@ -577,7 +577,7 @@ const questions = [
   },
   // Question 7
   {
-    integral: '\\int \\dfrac{1}{\\sqrt{1 - x^2}} \\, dx',
+    integral: '\\int \\dfrac{\\left( \\arcsin x \\right)^3}{\\sqrt{1 - x^2}} \\, dx',
     uOptions: [
       {
         option: 'Let ',
@@ -611,22 +611,22 @@ const questions = [
     integralOptions: [
       {
         option: '',
-        equation: '\\arcsin x + C',
+        equation: '\\frac{1}{4} \\left( \\arcsin x \\right)^4 + C',
         correct: true
       },
       {
         option: '',
-        equation: '\\arccos x + C',
+        equation: '\\frac{1}{4} \\left( \\arccos x \\right)^4 + C',
         correct: false
       },
       {
         option: '',
-        equation: '\\ln \\left| \\sqrt{1 - x^2} \\right| + C',
+        equation: '\\3 \\left( \\arcsin x \\right)^2 + C',
         correct: false
       },
       {
         option: '',
-        equation: '\\dfrac{1}{\\sqrt{1 - x^2}} + C',
+        equation: '\\frac{\\3 \\left( \\arcsin x \\right)^2}{\\sqrt{1-x^2}} + C',
         correct: false
       }
     ]
