@@ -1133,7 +1133,7 @@ const questions = [
     },
     {
       option: '',
-      equation: '\\ln \\left| \\sec x \\right| + C',
+      equation: '\\sec^2 x  + C',
       correct: false
     },
     {
@@ -1203,7 +1203,7 @@ const questions = [
 
 // Question 18
 {
-  integral: '\\int \\sec^2 x \\tan x \\, dx',
+  integral: '\\int \\sec^2 x \\tan^7 x \\, dx',
   uOptions: [
     {
       option: 'Let ',
@@ -1237,22 +1237,22 @@ const questions = [
   integralOptions: [
     {
       option: '',
-      equation: '\\dfrac{1}{2} \\tan^2 x + C',
+      equation: '\\dfrac{1}{8} \\tan^8 x + C',
       correct: true
     },
     {
       option: '',
-      equation: '\\tan x + C',
+      equation: '\\tan^7 x + C',
       correct: false
     },
     {
       option: '',
-      equation: '\\dfrac{1}{2} \\sec^2 x + C',
+      equation: '\\dfrac{1}{7} \\sec^2 x + C',
       correct: false
     },
     {
       option: '',
-      equation: '\\dfrac{1}{2} \\sec^2 x \\tan x + C',
+      equation: '7 \\sec^2 x \\tan^6 x + C',
       correct: false
     }
   ]
@@ -1304,7 +1304,7 @@ const questions = [
     },
     {
       option: '',
-      equation: '\\dfrac{1}{2} \\sin^2 x + C',
+      equation: '3 \\sin^2 x + C',
       correct: false
     },
     {
@@ -1317,7 +1317,7 @@ const questions = [
 
 // Question 20
 {
-  integral: '\\int \\dfrac{x}{\\sqrt{x^2 + 9}} \\, dx',
+  integral: '\\int \\dfrac{5x}{\\sqrt{x^2 + 9}} \\, dx',
   uOptions: [
     {
       option: 'Let ',
@@ -1335,9 +1335,9 @@ const questions = [
     },
     {
       option: 'Let ',
-      equation: 'u = \\sqrt{x^2 + 9}',
+      equation: 'u = 5x',
       thenText: ', then ',
-      duEquation: 'du = \\dfrac{x}{\\sqrt{x^2 + 9}} \\, dx',
+      duEquation: 'du = 5 \\, dx',
       correct: false
     },
     {
@@ -1351,22 +1351,22 @@ const questions = [
   integralOptions: [
     {
       option: '',
-      equation: '\\sqrt{x^2 + 9} + C',
+      equation: '5\\sqrt{x^2 + 9} + C',
       correct: true
     },
     {
       option: '',
-      equation: '\\dfrac{1}{2} \\left( x^2 + 9 \\right)^{3/2} + C',
+      equation: '\\dfrac{5}{2} \\left( x^2 + 9 \\right)^{3/2} + C',
       correct: false
     },
     {
       option: '',
-      equation: '\\ln \\left| x^2 + 9 \\right| + C',
+      equation: '5\\ln \\left| x^2 + 9 \\right| + C',
       correct: false
     },
     {
       option: '',
-      equation: '\\dfrac{x}{\\sqrt{x^2 + 9}} + C',
+      equation: '\\dfrac{10x}{\\sqrt{x^2 + 9}} + C',
       correct: false
     }
   ]
