@@ -238,7 +238,8 @@
 
   <!-- Embedded JavaScript Code -->
   <script>
-const questions = [
+    // Questions Array (Insert your current questions here)
+    const questions = [
   // Question 1
   {
     integral: '\\int \\left( 2x \\right) \\left( x^2 + 1 \\right)^3 \\, dx',
@@ -1373,12 +1374,7 @@ const questions = [
 }
 
 
-
-
-
-  
 ];
-
 
     // Game Variables
     let currentQuestionIndex = 0;
@@ -1388,8 +1384,6 @@ const questions = [
     let gameLength = '10'; // Default game length
     let problemOrder = 'random'; // Default order
     let selectedQuestions = [];
-    let advanceAllowed = false; // New variable to control advancement
-    let currentCorrectOption = null; // To store the correct option object
 
     // DOM Elements
     const mainMenu = document.getElementById('mainMenu');
@@ -1416,7 +1410,7 @@ const questions = [
     howToBtn.addEventListener('click', showInstructions);
     backBtn.addEventListener('click', showMainMenu);
     playNowBtn.addEventListener('click', startGame);
-    nextQuestionBtn.addEventListener('click', setupQuestion);
+    nextQuestionBtn.addEventListener('click', proceedToNext);
     endGameBtn.addEventListener('click', endGame);
     restartBtn.addEventListener('click', restartGame);
 
@@ -1469,7 +1463,6 @@ const questions = [
       }
 
       currentPart = 1;
-      advanceAllowed = false; // Reset advanceAllowed
       nextQuestionBtn.style.display = 'none';
       endGameBtn.style.display = 'inline';
       optionsContainer.innerHTML = '';
@@ -1488,8 +1481,6 @@ const questions = [
 
     function generateOptions(options) {
       optionsContainer.innerHTML = '';
-      advanceAllowed = false; // Reset advanceAllowed
-      currentCorrectOption = null; // Reset correct option
       options.sort(() => Math.random() - 0.5);
       options.forEach(optionObj => {
         const button = document.createElement('button');
@@ -1513,75 +1504,64 @@ const questions = [
         button.optionObj = optionObj; // Attach optionObj to button
         button.onclick = () => checkAnswer(optionObj, button);
         optionsContainer.appendChild(button);
-
-        if (optionObj.correct) {
-          currentCorrectOption = optionObj;
-        }
       });
       MathJax.typesetPromise();
     }
 
     function checkAnswer(optionObj, button) {
-      if (advanceAllowed) {
-        // If allowed to advance, only proceed if correct answer button is clicked
-        if (optionObj.correct) {
-          if (currentPart === 1) {
-            currentPart = 2;
-            const currentQuestion = selectedQuestions[currentQuestionIndex];
-            // Provide hint using the correct u and du
-            let hintText = 'Step 2: Find the integral in terms of \\( x \\).<br>HINT: ';
-            hintText += 'Use the substitution ';
-            hintText += optionObj.option;
-            hintText += `\\( ${optionObj.equation} \\)`;
-            hintText += optionObj.thenText;
-            hintText += `\\( ${optionObj.duEquation} \\)`;
-            questionPrompt.innerHTML = hintText;
-            generateOptions(currentQuestion.integralOptions);
-            MathJax.typesetPromise();
-          } else {
-            currentQuestionIndex++;
-            nextQuestionBtn.style.display = 'inline';
-          }
-          advanceAllowed = false;
-        }
-        return;
-      }
+      // Disable all buttons to prevent multiple clicks
+      const buttons = optionsContainer.querySelectorAll('button');
+      buttons.forEach(btn => {
+        btn.disabled = true;
+      });
 
-      // First time an answer is selected
       if (optionObj.correct) {
         // Correct answer selected
         button.classList.add('correct');
         score += 10;
         scoreDisplay.textContent = `Score: ${score}`;
-
-        // Add the text "Click again to advance" next to the button
-        const infoSpan = document.createElement('span');
-        infoSpan.className = 'info-text';
-        infoSpan.textContent = ' Click again to advance';
-        button.appendChild(infoSpan);
-
-        advanceAllowed = true;
       } else {
         // Incorrect answer selected
         button.classList.add('incorrect');
         score = Math.max(0, score - 5);
         scoreDisplay.textContent = `Score: ${score}`;
 
-        // Find and highlight the correct answer
-        const buttons = optionsContainer.querySelectorAll('button');
+        // Highlight the correct answer
         buttons.forEach(btn => {
           if (btn.optionObj && btn.optionObj.correct) {
             btn.classList.add('correct');
-
-            // Add the text "Click the correct answer to advance" next to the correct button
+            // Add "Correct Answer" text
             const infoSpan = document.createElement('span');
             infoSpan.className = 'info-text';
-            infoSpan.textContent = ' Click the correct answer to advance';
+            infoSpan.textContent = ' Correct Answer';
             btn.appendChild(infoSpan);
           }
         });
+      }
 
-        advanceAllowed = true;
+      // Show "Next Question" button
+      nextQuestionBtn.style.display = 'inline';
+    }
+
+    function proceedToNext() {
+      nextQuestionBtn.style.display = 'none';
+      if (currentPart === 1) {
+        currentPart = 2;
+        const currentQuestion = selectedQuestions[currentQuestionIndex];
+        // Provide hint using the correct u and du
+        const correctOption = currentQuestion.uOptions.find(option => option.correct);
+        let hintText = 'Step 2: Find the integral in terms of \\( x \\).<br>HINT: ';
+        hintText += 'Use the substitution ';
+        hintText += correctOption.option;
+        hintText += `\\( ${correctOption.equation} \\)`;
+        hintText += correctOption.thenText;
+        hintText += `\\( ${correctOption.duEquation} \\)`;
+        questionPrompt.innerHTML = hintText;
+        generateOptions(currentQuestion.integralOptions);
+        MathJax.typesetPromise();
+      } else {
+        currentQuestionIndex++;
+        setupQuestion();
       }
     }
 
