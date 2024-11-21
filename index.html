@@ -743,29 +743,29 @@ const questions = [
       }
     ]
   },
-  // Question 10
+ // Question 10 (Updated)
   {
-    integral: '\\int \\dfrac{\\tan x}{\\sec x} \\, dx',
+    integral: '\\int \\cot x \\, dx',
     uOptions: [
       {
         option: 'Let ',
-        equation: 'u = \\sec x',
+        equation: 'u = \\sin x',
         thenText: ', then ',
-        duEquation: 'du = \\sec x \\tan x \\, dx',
+        duEquation: 'du = \\cos x \\, dx',
         correct: true
       },
       {
         option: 'Let ',
-        equation: 'u = \\tan x',
+        equation: 'u = \\cos x',
         thenText: ', then ',
-        duEquation: 'du = \\sec^2 x \\, dx',
+        duEquation: 'du = -\\sin x \\, dx',
         correct: false
       },
       {
         option: 'Let ',
-        equation: 'u = \\dfrac{\\tan x}{\\sec x}',
+        equation: 'u = \\cot x',
         thenText: ', then ',
-        duEquation: 'du = \\dfrac{\\sec^2 x - \\tan^2 x}{\\sec^2 x} \\, dx',
+        duEquation: 'du = -\\csc^2 x \\, dx',
         correct: false
       },
       {
@@ -779,26 +779,26 @@ const questions = [
     integralOptions: [
       {
         option: '',
-        equation: '\\ln \\left| \\sec x \\right| + C',
+        equation: '\\ln \\left| \\sin x \\right| + C',
         correct: true
       },
       {
         option: '',
-        equation: '\\ln \\left| \\tan x \\right| + C',
+        equation: '\\ln \\left| \\cos x \\right| + C',
         correct: false
       },
       {
         option: '',
-        equation: '\\dfrac{1}{\\sec x} + C',
+        equation: '-\\ln \\left| \\tan x \\right| + C',
         correct: false
       },
       {
         option: '',
-        equation: '\\tan x + C',
+        equation: '\\ln \\left| \\cot x \\right| + C',
         correct: false
       }
     ]
-  }
+  } 
 ];
 
 
