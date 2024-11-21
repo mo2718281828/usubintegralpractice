@@ -1582,12 +1582,12 @@
   integralOptions: [
     {
       option: '',
-      equation: '-\\dfrac{1}{\\sin x} + C',
+      equation: '-\\csc x + C',
       correct: true
     },
     {
       option: '',
-      equation: '\\dfrac{1}{\\cos x} + C',
+      equation: '\\sec x + C',
       correct: false
     },
     {
@@ -1639,8 +1639,8 @@
   integralOptions: [
     {
       option: '',
-      equation: '\\dfrac{1}{\\sqrt{2}} \\cdot 2 \\sqrt{2x + 1} + C',
-      correct: true
+      equation: '\\dfrac{1}{4} \\ln \\left| 2x+1 \\right| + C',
+      correct: false
     },
     {
       option: '',
@@ -1650,7 +1650,7 @@
     {
       option: '',
       equation: '\\sqrt{2x + 1} + C',
-      correct: false
+      correct: true
     },
     {
       option: '',
@@ -1833,14 +1833,14 @@
 
 // Question 29
 {
-  integral: '\\int \\dfrac{1}{\\left( x^2 + 1 \\right)} \\, dx',
+  integral: '\\int \\dfrac{1}{\\left( x^2 + 1 \\right)\\arctan(x)} \\, dx',
   uOptions: [
     {
       option: 'Let ',
       equation: 'u = x',
       thenText: ', then ',
       duEquation: 'du = dx',
-      correct: true
+      correct: false
     },
     {
       option: 'Let ',
@@ -1851,10 +1851,10 @@
     },
     {
       option: 'Let ',
-      equation: 'u = \\arctan x',
+      equation: 'u = \\arctan (x)',
       thenText: ', then ',
       duEquation: 'du = \\dfrac{1}{x^2 + 1} \\, dx',
-      correct: false
+      correct: true
     },
     {
       option: 'Let ',
@@ -1868,7 +1868,7 @@
     {
       option: '',
       equation: '\\arctan x + C',
-      correct: true
+      correct: false
     },
     {
       option: '',
@@ -1877,12 +1877,12 @@
     },
     {
       option: '',
-      equation: '\\dfrac{1}{x} + C',
-      correct: false
+      equation: '\\ln \\left| \\arctan(x) \\right| + C',
+      correct: true
     },
     {
       option: '',
-      equation: '\\dfrac{1}{2} \\arctan x + C',
+      equation: '\\dfrac{-1}{\\left( \\arctan x\\right)^2}  + C',
       correct: false
     }
   ]
