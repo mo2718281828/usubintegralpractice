@@ -1,4 +1,7 @@
-const questions = [
+  <!-- Embedded JavaScript Code -->
+  <script>
+    // Questions Array (Insert your current questions here)
+    const questions = [
   // Question 1
   {
     integral: '\\int \\left( 2x \\right) \\left( x^2 + 1 \\right)^3 \\, dx',
@@ -678,7 +681,7 @@ const questions = [
 
 // Question 13
 {
-  integral: '\\int \\sin x \\ e^{\\cos x} \\, dx',
+  integral: '\\int \\left( \\sin x \\right) \\ e^{\\cos x} \\, dx',
   uOptions: [
     {
       option: 'Let ',
@@ -988,9 +991,9 @@ const questions = [
     },
     {
       option: 'Let ',
-      equation: 'u = \\tan x \\sec^2 x',
+      equation: 'u = \\tan x \\sec^7 x',
       thenText: ', then ',
-      duEquation: 'du = \\sec^2 x \\sec^2 x + \\tan x \\cdot 2 \\sec^2 x \\tan x \\, dx',
+      duEquation: 'du = \\sec^9 x + 7 \\sec^7 x \\tan^2 x \\, dx',
       correct: false
     }
   ],
@@ -1130,11 +1133,579 @@ const questions = [
       correct: false
     }
   ]
+},
+
+      // Questions 21 to 30
+
+// Question 21
+{
+  integral: '\\int x^2 \\cos\\left( x^3 \\right) \\, dx',
+  uOptions: [
+    {
+      option: 'Let ',
+      equation: 'u = x^3',
+      thenText: ', then ',
+      duEquation: 'du = 3x^2 \\, dx',
+      correct: true
+    },
+    {
+      option: 'Let ',
+      equation: 'u = x^2',
+      thenText: ', then ',
+      duEquation: 'du = 2x \\, dx',
+      correct: false
+    },
+    {
+      option: 'Let ',
+      equation: 'u = \\cos\\left( x^3 \\right)',
+      thenText: ', then ',
+      duEquation: 'du = -\\sin\\left( x^3 \\right) \\cdot 3x^2 \\, dx',
+      correct: false
+    },
+    {
+      option: 'Let ',
+      equation: 'u = x',
+      thenText: ', then ',
+      duEquation: 'du = dx',
+      correct: false
+    }
+  ],
+  integralOptions: [
+    {
+      option: '',
+      equation: '\\dfrac{1}{3} \\sin\\left( x^3 \\right) + C',
+      correct: true
+    },
+    {
+      option: '',
+      equation: '\\sin\\left( x^3 \\right) + C',
+      correct: false
+    },
+    {
+      option: '',
+      equation: '\\dfrac{1}{2} \\sin\\left( x^3 \\right) + C',
+      correct: false
+    },
+    {
+      option: '',
+      equation: '-\\dfrac{1}{3} \\cos\\left( x^3 \\right) + C',
+      correct: false
+    }
+  ]
+},
+
+// Question 22
+{
+  integral: '\\int \\dfrac{e^{2x}}{e^{2x} + 1} \\, dx',
+  uOptions: [
+    {
+      option: 'Let ',
+      equation: 'u = e^{2x} + 1',
+      thenText: ', then ',
+      duEquation: 'du = 2e^{2x} \\, dx',
+      correct: true
+    },
+    {
+      option: 'Let ',
+      equation: 'u = e^{2x}',
+      thenText: ', then ',
+      duEquation: 'du = 2e^{2x} \\, dx',
+      correct: false
+    },
+    {
+      option: 'Let ',
+      equation: 'u = 2x',
+      thenText: ', then ',
+      duEquation: 'du = 2 \\, dx',
+      correct: false
+    },
+    {
+      option: 'Let ',
+      equation: 'u = e^{2x} + 1',
+      thenText: ', then ',
+      duEquation: 'du = e^{2x} \\, dx',
+      correct: false
+    }
+  ],
+  integralOptions: [
+    {
+      option: '',
+      equation: '\\dfrac{1}{2} \\ln \\left| e^{2x} + 1 \\right| + C',
+      correct: true
+    },
+    {
+      option: '',
+      equation: '\\ln \\left| e^{2x} + 1 \\right| + C',
+      correct: false
+    },
+    {
+      option: '',
+      equation: '\\dfrac{1}{2} \\ln \\left| e^{2x} \\right| + C',
+      correct: false
+    },
+    {
+      option: '',
+      equation: '\\ln \\left| e^{2x} \\right| + C',
+      correct: false
+    }
+  ]
+},
+
+// Question 23
+{
+  integral: '\\int \\dfrac{1}{\\left( x \\ln x \\right)} \\, dx',
+  uOptions: [
+    {
+      option: 'Let ',
+      equation: 'u = \\ln x',
+      thenText: ', then ',
+      duEquation: 'du = \\dfrac{1}{x} \\, dx',
+      correct: true
+    },
+    {
+      option: 'Let ',
+      equation: 'u = x \\ln x',
+      thenText: ', then ',
+      duEquation: 'du = \\ln x + 1 \\, dx',
+      correct: false
+    },
+    {
+      option: 'Let ',
+      equation: 'u = x',
+      thenText: ', then ',
+      duEquation: 'du = dx',
+      correct: false
+    },
+    {
+      option: 'Let ',
+      equation: 'u = \\dfrac{1}{x \\ln x}',
+      thenText: ', then ',
+      duEquation: 'du = -\\dfrac{1 + \\ln x}{x^2 \\left( \\ln x \\right)^2} \\, dx',
+      correct: false
+    }
+  ],
+  integralOptions: [
+    {
+      option: '',
+      equation: '\\ln \\left| \\ln x \\right| + C',
+      correct: true
+    },
+    {
+      option: '',
+      equation: '\\dfrac{1}{\\ln x} + C',
+      correct: false
+    },
+    {
+      option: '',
+      equation: '\\ln \\left| x \\ln x \\right| + C',
+      correct: false
+    },
+    {
+      option: '',
+      equation: '\\dfrac{\\ln x}{x} + C',
+      correct: false
+    }
+  ]
+},
+
+// Question 24
+{
+  integral: '\\int \\dfrac{\\cos x}{\\sin^2 x} \\, dx',
+  uOptions: [
+    {
+      option: 'Let ',
+      equation: 'u = \\sin x',
+      thenText: ', then ',
+      duEquation: 'du = \\cos x \\, dx',
+      correct: true
+    },
+    {
+      option: 'Let ',
+      equation: 'u = \\cos x',
+      thenText: ', then ',
+      duEquation: 'du = -\\sin x \\, dx',
+      correct: false
+    },
+    {
+      option: 'Let ',
+      equation: 'u = \\tan x',
+      thenText: ', then ',
+      duEquation: 'du = \\sec^2 x \\, dx',
+      correct: false
+    },
+    {
+      option: 'Let ',
+      equation: 'u = \\sin^2 x',
+      thenText: ', then ',
+      duEquation: 'du = 2 \\sin x \\cos x \\, dx',
+      correct: false
+    }
+  ],
+  integralOptions: [
+    {
+      option: '',
+      equation: '-\\csc x + C',
+      correct: true
+    },
+    {
+      option: '',
+      equation: '\\sec x + C',
+      correct: false
+    },
+    {
+      option: '',
+      equation: '\\ln \\left| \\tan x \\right| + C',
+      correct: false
+    },
+    {
+      option: '',
+      equation: '-\\cot x + C',
+      correct: false
+    }
+  ]
+},
+
+// Question 25
+{
+  integral: '\\int \\dfrac{1}{\\sqrt{2x + 1}} \\, dx',
+  uOptions: [
+    {
+      option: 'Let ',
+      equation: 'u = 2x + 1',
+      thenText: ', then ',
+      duEquation: 'du = 2 \\, dx',
+      correct: true
+    },
+    {
+      option: 'Let ',
+      equation: 'u = \\sqrt{2x + 1}',
+      thenText: ', then ',
+      duEquation: 'du = \\dfrac{1}{\\sqrt{2x + 1}} \\cdot 2 \\, dx',
+      correct: false
+    },
+    {
+      option: 'Let ',
+      equation: 'u = x',
+      thenText: ', then ',
+      duEquation: 'du = dx',
+      correct: false
+    },
+    {
+      option: 'Let ',
+      equation: 'u = 2x',
+      thenText: ', then ',
+      duEquation: 'du = 2 \\, dx',
+      correct: false
+    }
+  ],
+  integralOptions: [
+    {
+      option: '',
+      equation: '\\dfrac{1}{4} \\ln \\left| 2x+1 \\right| + C',
+      correct: false
+    },
+    {
+      option: '',
+      equation: '2 \\sqrt{2x + 1} + C',
+      correct: false
+    },
+    {
+      option: '',
+      equation: '\\sqrt{2x + 1} + C',
+      correct: true
+    },
+    {
+      option: '',
+      equation: '\\ln \\left| 2x + 1 \\right| + C',
+      correct: false
+    }
+  ]
+},
+
+// Question 26
+{
+  integral: '\\int \\dfrac{x}{\\sqrt{x^2 + 4}} \\, dx',
+  uOptions: [
+    {
+      option: 'Let ',
+      equation: 'u = x^2 + 4',
+      thenText: ', then ',
+      duEquation: 'du = 2x \\, dx',
+      correct: true
+    },
+    {
+      option: 'Let ',
+      equation: 'u = \\sqrt{x^2 + 4}',
+      thenText: ', then ',
+      duEquation: 'du = \\dfrac{x}{\\sqrt{x^2 + 4}} \\, dx',
+      correct: false
+    },
+    {
+      option: 'Let ',
+      equation: 'u = x',
+      thenText: ', then ',
+      duEquation: 'du = dx',
+      correct: false
+    },
+    {
+      option: 'Let ',
+      equation: 'u = x^2',
+      thenText: ', then ',
+      duEquation: 'du = 2x \\, dx',
+      correct: false
+    }
+  ],
+  integralOptions: [
+    {
+      option: '',
+      equation: '\\sqrt{x^2 + 4} + C',
+      correct: true
+    },
+    {
+      option: '',
+      equation: '\\dfrac{1}{2} \\left( x^2 + 4 \\right)^{3/2} + C',
+      correct: false
+    },
+    {
+      option: '',
+      equation: '\\ln \\left| x^2 + 4 \\right| + C',
+      correct: false
+    },
+    {
+      option: '',
+      equation: '\\dfrac{x}{\\sqrt{x^2 + 4}} + C',
+      correct: false
+    }
+  ]
+},
+
+// Question 27
+{
+  integral: '\\int e^{5x} \\, dx',
+  uOptions: [
+    {
+      option: 'Let ',
+      equation: 'u = 5x',
+      thenText: ', then ',
+      duEquation: 'du = 5 \\, dx',
+      correct: true
+    },
+    {
+      option: 'Let ',
+      equation: 'u = e^{5x}',
+      thenText: ', then ',
+      duEquation: 'du = 5e^{5x} \\, dx',
+      correct: false
+    },
+    {
+      option: 'Let ',
+      equation: 'u = x',
+      thenText: ', then ',
+      duEquation: 'du = dx',
+      correct: false
+    },
+    {
+      option: 'Let ',
+      equation: 'u = 5',
+      thenText: ', then ',
+      duEquation: 'du = 0',
+      correct: false
+    }
+  ],
+  integralOptions: [
+    {
+      option: '',
+      equation: '\\dfrac{1}{5} e^{5x} + C',
+      correct: true
+    },
+    {
+      option: '',
+      equation: 'e^{5x} + C',
+      correct: false
+    },
+    {
+      option: '',
+      equation: '5 e^{5x} + C',
+      correct: false
+    },
+    {
+      option: '',
+      equation: '\\dfrac{1}{5} e^{x} + C',
+      correct: false
+    }
+  ]
+},
+
+// Question 28
+{
+  integral: '\\int \\dfrac{\\ln x}{x} \\, dx',
+  uOptions: [
+    {
+      option: 'Let ',
+      equation: 'u = \\ln x',
+      thenText: ', then ',
+      duEquation: 'du = \\dfrac{1}{x} \\, dx',
+      correct: true
+    },
+    {
+      option: 'Let ',
+      equation: 'u = x',
+      thenText: ', then ',
+      duEquation: 'du = dx',
+      correct: false
+    },
+    {
+      option: 'Let ',
+      equation: 'u = \\dfrac{1}{x}',
+      thenText: ', then ',
+      duEquation: 'du = -\\dfrac{1}{x^2} \\, dx',
+      correct: false
+    },
+    {
+      option: 'Let ',
+      equation: 'u = \\ln x',
+      thenText: ', then ',
+      duEquation: 'du = x \\, dx',
+      correct: false
+    }
+  ],
+  integralOptions: [
+    {
+      option: '',
+      equation: '\\dfrac{1}{2} \\left( \\ln x \\right)^2 + C',
+      correct: true
+    },
+    {
+      option: '',
+      equation: '\\left( \\ln x \\right)^2 + C',
+      correct: false
+    },
+    {
+      option: '',
+      equation: '\\dfrac{1}{2} x^2 + C',
+      correct: false
+    },
+    {
+      option: '',
+      equation: '\\ln x + C',
+      correct: false
+    }
+  ]
+},
+
+// Question 29
+{
+  integral: '\\int \\dfrac{1}{\\left( x^2 + 1 \\right)\\arctan(x)} \\, dx',
+  uOptions: [
+    {
+      option: 'Let ',
+      equation: 'u = x',
+      thenText: ', then ',
+      duEquation: 'du = dx',
+      correct: false
+    },
+    {
+      option: 'Let ',
+      equation: 'u = x^2 + 1',
+      thenText: ', then ',
+      duEquation: 'du = 2x \\, dx',
+      correct: false
+    },
+    {
+      option: 'Let ',
+      equation: 'u = \\arctan (x)',
+      thenText: ', then ',
+      duEquation: 'du = \\dfrac{1}{x^2 + 1} \\, dx',
+      correct: true
+    },
+    {
+      option: 'Let ',
+      equation: 'u = \\dfrac{1}{x^2 + 1}',
+      thenText: ', then ',
+      duEquation: 'du = -\\dfrac{2x}{\\left( x^2 + 1 \\right)^2} \\, dx',
+      correct: false
+    }
+  ],
+  integralOptions: [
+    {
+      option: '',
+      equation: '\\arctan x + C',
+      correct: false
+    },
+    {
+      option: '',
+      equation: '\\ln \\left| x^2 + 1 \\right| + C',
+      correct: false
+    },
+    {
+      option: '',
+      equation: '\\ln \\left| \\arctan(x) \\right| + C',
+      correct: true
+    },
+    {
+      option: '',
+      equation: '\\dfrac{-1}{\\left( \\arctan x\\right)^2}  + C',
+      correct: false
+    }
+  ]
+},
+
+// Question 30
+{
+  integral: '\\int \\dfrac{x}{x^2 + 1} \\, dx',
+  uOptions: [
+    {
+      option: 'Let ',
+      equation: 'u = x^2 + 1',
+      thenText: ', then ',
+      duEquation: 'du = 2x \\, dx',
+      correct: true
+    },
+    {
+      option: 'Let ',
+      equation: 'u = x^2',
+      thenText: ', then ',
+      duEquation: 'du = 2x \\, dx',
+      correct: false
+    },
+    {
+      option: 'Let ',
+      equation: 'u = \\ln \\left( x^2 + 1 \\right)',
+      thenText: ', then ',
+      duEquation: 'du = \\dfrac{2x}{x^2 + 1} \\, dx',
+      correct: false
+    },
+    {
+      option: 'Let ',
+      equation: 'u = x',
+      thenText: ', then ',
+      duEquation: 'du = dx',
+      correct: false
+    }
+  ],
+  integralOptions: [
+    {
+      option: '',
+      equation: '\\dfrac{1}{2} \\ln \\left| x^2 + 1 \\right| + C',
+      correct: true
+    },
+    {
+      option: '',
+      equation: '\\ln \\left| x^2 + 1 \\right| + C',
+      correct: false
+    },
+    {
+      option: '',
+      equation: '\\dfrac{1}{2} \\arctan x + C',
+      correct: false
+    },
+    {
+      option: '',
+      equation: '\\arctan x + C',
+      correct: false
+    }
+  ]
 }
-
-
-
-
-
-  
 ];
+
+</script>
