@@ -192,7 +192,7 @@
           <option value="5">5 Rounds</option>
           <option value="10">10 Rounds</option>
           <option value="20">20 Rounds</option>
-          <option value="unlimited">Unlimited</option>
+          <option value="max">MAX</option>
         </select>
       </div>
       <button id="howToBtn" class="menu-button">How to Play</button>
@@ -2009,8 +2009,8 @@
         selectedQuestions = [...questions];
       }
 
-      // Adjust game length if not unlimited
-      if (gameLength !== 'unlimited') {
+      // Adjust game length if not max
+      if (gameLength !== 'max') {
         selectedQuestions = selectedQuestions.slice(0, parseInt(gameLength));
       }
 
@@ -2020,7 +2020,7 @@
       score = 0;
       roundsPlayed = 0;
       scoreDisplay.textContent = `Score: ${score}`;
-      roundDisplay.textContent = `Round: ${roundsPlayed + 1}/${gameLength === 'unlimited' ? selectedQuestions.length : gameLength}`;
+      roundDisplay.textContent = `Round: ${roundsPlayed + 1}/${gameLength === 'max' ? selectedQuestions.length : gameLength}`;
 
       // Show game content and hide menu
       mainMenu.classList.add('hidden');
@@ -2047,7 +2047,7 @@
       generateOptions(currentQuestion.uOptions);
 
       roundsPlayed++;
-      roundDisplay.textContent = `Round: ${roundsPlayed}/${gameLength === 'unlimited' ? selectedQuestions.length : gameLength}`;
+      roundDisplay.textContent = `Round: ${roundsPlayed}/${gameLength === 'max' ? selectedQuestions.length : gameLength}`;
 
       MathJax.typesetPromise();
     }
